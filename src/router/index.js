@@ -24,12 +24,12 @@ export const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from) => {
-  const store = useAuth();
+// router.beforeEach((to, from) => {
+//   const store = useAuth();
 
-  if (to.meta.requiresAuth && !store.isLoggedin) {
-    return {
-      name: "error_403",
-    };
-  }
-});
+//   if (to.meta.requiresAuth && !store.isLoggedin) {
+//     return {
+//       name: "error_403",
+//     };
+//   }
+// });

@@ -31,7 +31,7 @@ import { useRouter } from "vue-router";
 import { useAuth } from "@stores";
 import { ref } from "vue";
 
-const email = ref("demo@gmail.com");
+const email = ref("jean@demo.com");
 const succesMessage = ref("");
 const errorMessage = ref("");
 
