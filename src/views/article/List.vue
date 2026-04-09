@@ -2,11 +2,8 @@
   <div class="container mt-4">
     <h1>{{ t("article.list.title") }}</h1>
 
-    <RouterLink
-      class="btn btn-sm btn-primary"
-      :to="{ name: 'article_create' }"
-      >{{ t("article.create.btnCreate") }}</RouterLink
-    >
+    <RouterLink class="btn btn-sm btn-primary" :to="{ name: 'article_create' }">{{ t("article.create.btnCreate") }}
+    </RouterLink>
 
     <table class="table table-bordered table-striped mt-3">
       <thead class="table-dark">
@@ -14,6 +11,7 @@
           <th>{{ t("article.list.table.head.name") }}</th>
           <th>{{ t("article.list.table.head.price") }}</th>
           <th>{{ t("article.list.table.head.qty") }}</th>
+          <th>{{ t("article.list.table.head.action") }}</th>
         </tr>
       </thead>
 
@@ -22,6 +20,11 @@
           <td>{{ article.name }}</td>
           <td>{{ article.price }}</td>
           <td>{{ article.quantity }}</td>
+          <td>
+            <RouterLink :to="{ name: 'article_edit', params: {id: article.id}}" class="btn btn-primary">
+              <Edit />
+            </RouterLink>
+          </td>
         </tr>
 
         <!-- Cas vide -->
@@ -39,6 +42,7 @@
 import { useArticleStore } from "@stores";
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { Edit } from "@lucide/vue"
 
 const store = useArticleStore();
 const { t } = useI18n();
