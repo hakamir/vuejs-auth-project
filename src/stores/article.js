@@ -77,5 +77,20 @@ export const useArticleStore = defineStore("article", () => {
     }
   };
 
-  return { articles, getArticles, form, addArticle, getArticle, updateArticle };
+  const deleteArticle = async (id) => {
+    try {
+      await instance.delete(articleService.deleteArticle(id));
+    } catch (error) {
+      throw error;
+    }
+  };
+  return {
+    articles,
+    getArticles,
+    form,
+    addArticle,
+    getArticle,
+    updateArticle,
+    deleteArticle,
+  };
 });

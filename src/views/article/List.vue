@@ -21,9 +21,12 @@
           <td>{{ article.price }}</td>
           <td>{{ article.quantity }}</td>
           <td>
-            <RouterLink :to="{ name: 'article_edit', params: {id: article.id}}" class="btn btn-primary">
+            <RouterLink :to="{ name: 'article_edit', params: { id: article.id } }" class="btn btn-primary">
               <Edit />
             </RouterLink>
+            <button @click="deleteArticle(article.id)" class="btn btn-danger">
+              <Trash2 />
+            </button>
           </td>
         </tr>
 
@@ -42,12 +45,24 @@
 import { useArticleStore } from "@stores";
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { Edit } from "@lucide/vue"
+import { Edit, Trash2 } from "@lucide/vue"
 
 const store = useArticleStore();
 const { t } = useI18n();
 
-onMounted(() => {
-  store.getArticles();
+onMounted(async () => {
+  try {
+    await store.getArticles();
+  } catch (error) {
+    console.error("Can't get articles")
+  }
 });
+
+const deleteArticle = async (id) => {
+  try {
+    await store.deleteArticle(id);
+  } catch (error) {
+    console.error(error.response.status)
+  }
+}
 </script>
