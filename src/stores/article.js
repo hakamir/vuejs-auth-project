@@ -18,13 +18,16 @@ export const useArticleStore = defineStore("article", () => {
   const getArticles = async () => {
     try {
       const resp = await instance.get(articleService.getArticles);
-
       articles.value = resp.data.data.map((a) => {
-        return a.data;
+        return {
+          id: a.id,
+          ...a.data,
+        };
       });
     } catch (error) {
       console.log(error.response.status);
       console.log("error de chargement");
+      throw error;
     }
   };
 
@@ -41,8 +44,38 @@ export const useArticleStore = defineStore("article", () => {
       }, 3000);
     } catch (error) {
       form.value.busy = false;
+      throw error;
     }
   };
 
-  return { articles, getArticles, form, addArticle };
+  const getArticle = async (id) => {
+    try {
+      const resp = await instance.get(articleService.getArticle(id));
+      form.value.clear();
+      Object.assign(form.value, {
+        id,
+        ...resp.data.data.data,
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const updateArticle = async () => {
+    form.value.busy = true;
+    const { id, ...rest } = form.value.data();
+    console.log(rest);
+    try {
+      await instance.put(articleService.updateArticle(form.value.id), {
+        data: rest,
+      });
+      form.value.busy = false;
+    } catch (error) {
+      form.value.busy = false;
+      throw error;
+    }
+  };
+
+  return { articles, getArticles, form, addArticle, getArticle, updateArticle };
 });

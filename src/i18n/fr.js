@@ -11,6 +11,7 @@ export default {
           name: "Nom",
           price: "Prix",
           qty: "Quantité",
+          action: "Action"
         },
       },
     },
